@@ -1,1 +1,52 @@
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const {
+  optimize: { SplitChunksPlugin }
+} = require("webpack");
+
+module.exports = {
+  entry: {
+    app: "./app.js",
+    vendor: ["react", "lodash"] // list of vendor modules to include in vendor bundle
+  },
+  output: {
+    path: path.resolve(__dirname, "assets"),
+    filename: "[name].js" // [name] will be replaced with the entry key ("app" or "vendor")
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "style.css"
+    }),
+    new SplitChunksPlugin({
+      chunks: "all", // include all chunks
+      name: "vendor" // name of the vendor chunk
+    })
+  ]
+};
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <script src="assets/vendor.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
+
+
 
