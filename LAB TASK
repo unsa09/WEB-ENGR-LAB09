@@ -1,1 +1,109 @@
+const students = [
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+  { id: 3, name: "Eve" }
+];
 
+function getAllStudents() {
+  return students;
+}
+
+function getStudentById(id) {
+  return students.find(student => student.id === id);
+}
+
+export { getAllStudents, getStudentById };
+
+
+faculties.js
+
+const faculties = [
+  { id: 1, name: "John" },
+  { id: 2, name: "Jane" },
+  { id: 3, name: "Jack" }
+];
+
+function getAllFaculties() {
+  return faculties;
+}
+
+function getFacultyById(id) {
+  return faculties.find(faculty => faculty.id === id);
+}
+
+export { getAllFaculties, getFacultyById };
+
+events.js
+ codeconst events = [
+  { id: 1, name: "Lecture" },
+  { id: 2, name: "Workshop" },
+  { id: 3, name: "Seminar" }
+];
+
+function getAllEvents() {
+  return events;
+}
+
+function getEventById(id) {
+  return events.find(event => event.id === id);
+}
+
+export { getAllEvents, getEventById };
+
+app.js
+import { getAllStudents } from "./students";
+import { getAllFaculties } from "./faculties";
+import { getAllEvents } from "./events";
+
+console.log(getAllStudents());
+console.log(getAllFaculties());
+console.log(getAllEvents());
+
+app-style.scss
+.students {
+  color: blue;
+}
+
+.faculties {
+  color: green;
+}
+
+.events {
+  color: purple;
+}
+webpack.config.js
+
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+module.exports = {
+  entry: "./app.js",
+  output: {
+    path: path.resolve(__dirname, "assets"),
+    filename: "bundle.js"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "style.css"
+    })
+  ]
+};
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
